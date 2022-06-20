@@ -13,9 +13,8 @@ const details=require("./assets/user.json");
 app.get(("/"),async(req,res)=>{
     try {
 
-        // const userdata=await User.find({}).lean().exec();
-        console.log(rootPath);
-        return res.status(200).sendFile(rootPath.join(__dirname+"src/assets/users.html"));
+        // console.log(__dirname);
+        return res.status(200).sendFile(rootPath.join(__dirname+"/assets/users.html"));
     } catch (error) {
         
         return res.status(500).send("something went wrong");
@@ -27,7 +26,6 @@ app.get(("/"),async(req,res)=>{
 app.get(("/users"),async(req,res)=>{
     try {
 
-        // const userdata=await details.find({}).lean().exec();
         return res.status(200).send(details);
         
     } catch (error) {
@@ -56,7 +54,7 @@ app.get(("/users/:ID"),async(req,res)=>{
 app.post(("/users/:ID"),async(req,res)=>{
     try {
 
-        const user=await details.findByIdAndUpdate(req.params.ID,req.body,{new:true}).lean().exec()
+        const user=await details.filter(req.params.ID,req.body,{new:true});
         return res.status(200).send(user);
         
     } catch (error) {
